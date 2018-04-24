@@ -30,7 +30,12 @@ const createContainer = (
       this.actions = Object.keys(actions).reduce(
         (result, action) => ({
           ...result,
-          [action]: (...args) => this.dispatch(actions[action](...args))
+          [action]: (...args) =>
+            this.dispatch(
+              typeof actions[action] === "string"
+                ? { type: actions[action] }
+                : actions[action](...args)
+            )
         }),
         {}
       )

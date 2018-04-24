@@ -10,8 +10,8 @@ const CounterContainer = createContainer(
     INCREMENT_BY: (state, action) => ({ count: state.count + action.by })
   },
   {
-    increment: () => ({ type: "INCREMENT" }),
-    decrement: () => ({ type: "DECREMENT" }),
+    increment: "INCREMENT",
+    decrement: "DECREMENT",
     incrementBy: by => ({ type: "INCREMENT_BY", by }),
 
     incrementByAsync: by => ({ incrementBy }) =>
