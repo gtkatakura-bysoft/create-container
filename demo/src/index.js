@@ -7,11 +7,13 @@ const CounterContainer = createContainer(
   {
     INCREMENT: state => ({ count: state.count + 1 }),
     DECREMENT: state => ({ count: state.count - 1 }),
+
     INCREMENT_BY: (state, action) => ({ count: state.count + action.by })
   },
   {
     increment: "INCREMENT",
     decrement: "DECREMENT",
+
     incrementBy: by => ({ type: "INCREMENT_BY", by }),
 
     incrementByAsync: by => ({ incrementBy }) =>
