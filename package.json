@@ -4,12 +4,7 @@
   "description": "Create predictable state containers for JavaScript apps",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "files": [
-    "css",
-    "es",
-    "lib",
-    "umd"
-  ],
+  "files": ["css", "es", "lib", "umd"],
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
@@ -30,7 +25,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/@smalldots/create-container.git"
+    "url": "https://github.com/smalldots/create-container.git"
   },
   "keywords": [
     "container",
