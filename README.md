@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/%40smalldots%2Fcreate-container.svg)](https://badge.fury.io/js/%40smalldots%2Fcreate-container)
 
-Create predictable state containers for JavaScript apps
+Predictable state containers for React apps
 
 ## Installation
 
