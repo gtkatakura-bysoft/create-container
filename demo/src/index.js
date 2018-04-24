@@ -1,5 +1,4 @@
-import React, { Component } from "react"
-
+import React from "react"
 import createContainer from "../../src"
 import { render } from "react-dom"
 

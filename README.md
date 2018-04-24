@@ -1,16 +1,68 @@
-# create-container
+# createContainer()
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+Create predictable state containers for JavaScript apps
 
-Describe create-container here.
+# Usage
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+```js
+import React from "react"
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
+import createContainer from "@smalldots/create-container"
+import { render } from "react-dom"
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+const CounterContainer = createContainer(
+  { count: 0 },
+  {
+    INCREMENT: state => ({ count: state.count + 1 }),
+    DECREMENT: state => ({ count: state.count - 1 }),
+    INCREMENT_BY: (state, action) => ({ count: state.count + action.by })
+  },
+  {
+    increment: () => ({ type: "INCREMENT" }),
+    decrement: () => ({ type: "DECREMENT" }),
+    incrementBy: by => ({ type: "INCREMENT_BY", by }),
+
+    incrementByAsync: by => ({ incrementBy }) =>
+      setTimeout(() => incrementBy(by), 1000)
+  }
+)
+
+const App = () => (
+  <CounterContainer.Provider>
+    <p>
+      Current count: <Count />
+    </p>
+    <IncrementButton />
+    <DecrementButton />
+    <AsyncIncrementButton by={5} />
+  </CounterContainer.Provider>
+)
+
+const Count = () => (
+  <CounterContainer.Consumer>{({ count }) => count}</CounterContainer.Consumer>
+)
+
+const IncrementButton = () => (
+  <CounterContainer.Consumer>
+    {({ increment }) => <button onClick={increment}>Increment</button>}
+  </CounterContainer.Consumer>
+)
+
+const DecrementButton = () => (
+  <CounterContainer.Consumer>
+    {({ decrement }) => <button onClick={decrement}>Decrement</button>}
+  </CounterContainer.Consumer>
+)
+
+const AsyncIncrementButton = ({ by }) => (
+  <CounterContainer.Consumer>
+    {({ incrementByAsync }) => (
+      <button onClick={() => incrementByAsync(by)}>
+        Increment by {by} (takes 1s)
+      </button>
+    )}
+  </CounterContainer.Consumer>
+)
+
+render(<App />, document.getElementById("root"))
+```
