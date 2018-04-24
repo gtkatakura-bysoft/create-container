@@ -2,6 +2,10 @@
 
 Create predictable state containers for JavaScript apps
 
+# Demo
+
+https://codesandbox.io/s/03znoqjz4w
+
 # Usage
 
 ```js
