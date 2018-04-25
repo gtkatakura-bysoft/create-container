@@ -2,24 +2,27 @@ import React from "react"
 import createContainer from "../../src"
 import { render } from "react-dom"
 
-const CounterContainer = createContainer(
-  { count: 0 },
-  {
+const CounterContainer = createContainer({
+  preloadedState: { count: 0 },
+  reducer: {
     INCREMENT: state => ({ count: state.count + 1 }),
     DECREMENT: state => ({ count: state.count - 1 }),
 
     INCREMENT_BY: (state, action) => ({ count: state.count + action.by })
   },
-  {
+  selectors: {
+    getCount: ({ count }) => count
+  },
+  actions: {
     increment: "INCREMENT",
     decrement: "DECREMENT",
-
-    incrementBy: by => ({ type: "INCREMENT_BY", by }),
-
+    incrementBy: by => ({ type: "INCREMENT_BY", by })
+  },
+  effects: {
     incrementByAsync: by => ({ incrementBy }) =>
       setTimeout(() => incrementBy(by), 1000)
   }
-)
+})
 
 const Demo = () => (
   <CounterContainer.Provider>
