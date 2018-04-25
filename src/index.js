@@ -14,8 +14,8 @@ const createContainer = ({
   preloadedState = {},
   reducer = state => state,
   selectors = {},
-  actions = {},
-  effects = {}
+  actionCreators = {},
+  effectCreators = {}
 }) => {
   const enhancedReducer = (state = preloadedState, action) =>
     typeof reducer === "object"
@@ -29,24 +29,23 @@ const createContainer = ({
   const Context = React.createContext({
     ...defaultState,
     ...Object.keys(selectors).reduce(
-      (result, selectorName) => ({
+      (result, key) => ({
         ...result,
-        [selectorName]: (...args) =>
-          selectors[selectorName](defaultState, ...args)
+        [key]: (...args) => selectors[key](defaultState, ...args)
       }),
       {}
     ),
-    ...Object.keys(actions).reduce(
-      (result, action) => ({
+    ...Object.keys(actionCreators).reduce(
+      (result, key) => ({
         ...result,
-        [action]: () => {}
+        [key]: () => {}
       }),
       {}
     ),
-    ...Object.keys(effects).reduce(
-      (result, effect) => ({
+    ...Object.keys(effectCreators).reduce(
+      (result, key) => ({
         ...result,
-        [effect]: () => {}
+        [key]: () => {}
       }),
       {}
     )
@@ -57,28 +56,27 @@ const createContainer = ({
       super(props)
 
       this.selectors = Object.keys(selectors).reduce(
-        (result, selectorName) => ({
+        (result, key) => ({
           ...result,
-          [selectorName]: (...args) =>
-            selectors[selectorName](this.state, ...args)
+          [key]: (...args) => selectors[key](this.state, ...args)
         }),
         {}
       )
 
-      this.actions = Object.keys(actions).reduce(
-        (result, actionName) => ({
+      this.actions = Object.keys(actionCreators).reduce(
+        (result, key) => ({
           ...result,
-          [actionName]: (...args) =>
-            this.dispatchAction(this.parseAction(actions[actionName], args))
+          [key]: (...args) =>
+            this.dispatchAction(this.createAction(actionCreators[key], args))
         }),
         {}
       )
 
-      this.effects = Object.keys(effects).reduce(
-        (result, effectName) => ({
+      this.effects = Object.keys(effectCreators).reduce(
+        (result, key) => ({
           ...result,
-          [effectName]: (...args) =>
-            this.dispatchEffect(effects[effectName](...args))
+          [key]: (...args) =>
+            this.dispatchEffect(this.createEffect(effectCreators[key], args))
         }),
         {}
       )
@@ -91,17 +89,19 @@ const createContainer = ({
       }
     }
 
-    parseAction = (action, args) =>
-      typeof action === "string"
+    createAction = (actionCreator, args) =>
+      typeof actionCreator === "string"
         ? {
-            type: action,
+            type: actionCreator,
             // If the action is a string and the first argument passed to the action
             // is a plain object, we'll spread the content of this object into the action payload.
             // E.g.: `{ receivePosts: "RECEIVE_POSTS" }` dispatched as `receivePosts({ posts: [], comments: [] })`
             // would be converted to `{ type: "RECEIVE_POSTS", posts: [], comments: [] }`
             ...(isPlainObject(args[0]) ? args[0] : {})
           }
-        : action(...args)
+        : actionCreator(...args)
+
+    createEffect = (effectCreator, args) => effectCreator(...args)
 
     dispatchAction = action =>
       new Promise(resolve =>

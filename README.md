@@ -33,12 +33,12 @@ const CounterContainer = createContainer({
   selectors: {
     getCount: ({ count }) => count
   },
-  actions: {
+  actionCreators: {
     increment: "INCREMENT",
     decrement: "DECREMENT",
     incrementBy: by => ({ type: "INCREMENT_BY", by })
   },
-  effects: {
+  effectCreators: {
     incrementByAsync: by => ({ incrementBy }) =>
       setTimeout(() => incrementBy(by), 1000)
   }
