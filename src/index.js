@@ -3,7 +3,7 @@ import React, { Component } from "react"
 const identity = value => value
 
 const isPlainObject = obj => {
-  if (typeof obj !== "object" || obj === null) return false
+  if (obj === null || typeof obj !== "object") return false
 
   let proto = obj
   while (Object.getPrototypeOf(proto) !== null)
