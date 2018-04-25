@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 
+const identity = value => value
+
 const isPlainObject = obj => {
   if (typeof obj !== "object" || obj === null) return false
 
@@ -19,9 +21,7 @@ const createContainer = ({
 }) => {
   const enhancedReducer = (state = preloadedState, action) =>
     typeof reducer === "object"
-      ? reducer[action.type]
-        ? reducer[action.type](state, action)
-        : state
+      ? (reducer[action.type] || identity)(state, action)
       : reducer(state, action)
 
   const defaultState = enhancedReducer(undefined, {})
