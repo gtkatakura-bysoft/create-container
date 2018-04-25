@@ -10,10 +10,11 @@ Predictable state containers for React apps
 npm install --save @smalldots/create-container
 ```
 
-# Demo
+# Demos
 
 * Simple counter: https://codesandbox.io/s/03znoqjz4w
 * Using high order containers to create multiple counters: https://codesandbox.io/s/yqrxnk48x1
+* Advanced example (data fetching + entities handling): https://codesandbox.io/s/1vn8j7yq83
 
 # Usage
 
