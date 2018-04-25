@@ -19,11 +19,6 @@ const createContainer = ({
   actionCreators = {},
   effectCreators = {}
 }) => {
-  const enhancedReducer = (state, action) =>
-    typeof reducer === "object"
-      ? (reducer[action.type] || identity)(state, action)
-      : reducer(state, action)
-
   const Context = React.createContext({
     ...initialState,
     ...Object.keys(selectors).reduce(
@@ -103,7 +98,13 @@ const createContainer = ({
 
     dispatchAction = action =>
       new Promise(resolve =>
-        this.setState(state => enhancedReducer(state, action), resolve)
+        this.setState(
+          state =>
+            typeof reducer === "object"
+              ? (reducer[action.type] || identity)(state, action)
+              : reducer(state, action),
+          resolve
+        )
       )
 
     dispatchEffect = effect =>
