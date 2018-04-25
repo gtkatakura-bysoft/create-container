@@ -12,7 +12,8 @@ npm install --save @smalldots/create-container
 
 # Demo
 
-https://codesandbox.io/s/03znoqjz4w
+* Simple counter: https://codesandbox.io/s/03znoqjz4w
+* Using high order containers to create multiple counters: https://codesandbox.io/s/yqrxnk48x1
 
 # Usage
 
