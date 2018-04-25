@@ -91,10 +91,10 @@ const createContainer = ({
       typeof actionCreator === "string"
         ? {
             type: actionCreator,
-            // If the action is a string and the first argument passed to the action
-            // is a plain object, we'll spread the content of this object into the action payload.
+            // If the `actionCreator` is a string and the first argument passed to it is a plain object,
+            // we'll spread the contents of this object into the action payload.
             // E.g.: `{ receivePosts: "RECEIVE_POSTS" }` dispatched as `receivePosts({ posts: [], comments: [] })`
-            // would be converted to `{ type: "RECEIVE_POSTS", posts: [], comments: [] }`
+            // would be converted to `{ type: "RECEIVE_POSTS", posts: [], comments: [] }`.
             ...(isPlainObject(args[0]) ? args[0] : {})
           }
         : actionCreator(...args)
