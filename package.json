@@ -1,6 +1,6 @@
 {
   "name": "@smalldots/create-container",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Predictable state containers for React apps",
   "main": "lib/index.js",
   "module": "es/index.js",
