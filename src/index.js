@@ -68,10 +68,8 @@ const createContainer = ({
       this.actions = Object.keys(actions).reduce(
         (result, actionName) => ({
           ...result,
-          [actionName]: (...args) => {
-            const action = this.parseAction(actions[actionName], args)
-            return this.dispatchAction(action)
-          }
+          [actionName]: (...args) =>
+            this.dispatchAction(this.parseAction(actions[actionName], args))
         }),
         {}
       )
@@ -79,10 +77,8 @@ const createContainer = ({
       this.effects = Object.keys(effects).reduce(
         (result, effectName) => ({
           ...result,
-          [effectName]: (...args) => {
-            const effect = effects[effectName](...args)
-            return this.dispatchEffect(effect)
-          }
+          [effectName]: (...args) =>
+            this.dispatchEffect(effects[effectName](...args))
         }),
         {}
       )
