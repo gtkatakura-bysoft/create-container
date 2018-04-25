@@ -13,25 +13,23 @@ const isPlainObject = obj => {
 }
 
 const createContainer = ({
-  preloadedState = {},
+  initialState = {},
   reducer = state => state,
   selectors = {},
   actionCreators = {},
   effectCreators = {}
 }) => {
-  const enhancedReducer = (state = preloadedState, action) =>
+  const enhancedReducer = (state, action) =>
     typeof reducer === "object"
       ? (reducer[action.type] || identity)(state, action)
       : reducer(state, action)
 
-  const defaultState = enhancedReducer(undefined, {})
-
   const Context = React.createContext({
-    ...defaultState,
+    ...initialState,
     ...Object.keys(selectors).reduce(
       (result, key) => ({
         ...result,
-        [key]: (...args) => selectors[key](defaultState, ...args)
+        [key]: (...args) => selectors[key](initialState, ...args)
       }),
       {}
     ),
@@ -82,7 +80,7 @@ const createContainer = ({
       )
 
       this.state = {
-        ...defaultState,
+        ...initialState,
         ...this.selectors,
         ...this.actions,
         ...this.effects

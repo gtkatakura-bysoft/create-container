@@ -3,7 +3,7 @@ import createContainer from "../../src"
 import { render } from "react-dom"
 
 const CounterContainer = createContainer({
-  preloadedState: { count: 0 },
+  initialState: { count: 0 },
   reducer: {
     INCREMENT: state => ({ count: state.count + 1 }),
     DECREMENT: state => ({ count: state.count - 1 }),
