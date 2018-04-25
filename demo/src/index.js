@@ -1,13 +1,13 @@
 import React from "react"
-import createContainer from "../../src"
 import { render } from "react-dom"
+
+import createContainer from "../../src"
 
 const CounterContainer = createContainer({
   initialState: { count: 0 },
   reducer: {
     INCREMENT: state => ({ count: state.count + 1 }),
     DECREMENT: state => ({ count: state.count - 1 }),
-
     INCREMENT_BY: (state, action) => ({ count: state.count + action.by })
   },
   selectors: {

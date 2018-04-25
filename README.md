@@ -18,16 +18,15 @@ https://codesandbox.io/s/03znoqjz4w
 
 ```js
 import React from "react"
+import { render } from "react-dom"
 
 import createContainer from "@smalldots/create-container"
-import { render } from "react-dom"
 
 const CounterContainer = createContainer({
   initialState: { count: 0 },
   reducer: {
     INCREMENT: state => ({ count: state.count + 1 }),
     DECREMENT: state => ({ count: state.count - 1 }),
-
     INCREMENT_BY: (state, action) => ({ count: state.count + action.by })
   },
   selectors: {
