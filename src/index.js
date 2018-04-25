@@ -1,5 +1,15 @@
 import React, { Component } from "react"
 
+const isPlainObject = obj => {
+  if (typeof obj !== "object" || obj === null) return false
+
+  let proto = obj
+  while (Object.getPrototypeOf(proto) !== null)
+    proto = Object.getPrototypeOf(proto)
+
+  return Object.getPrototypeOf(obj) === proto
+}
+
 const createContainer = (
   initialState = {},
   reducer = state => state,
@@ -33,7 +43,14 @@ const createContainer = (
           [action]: (...args) =>
             this.dispatch(
               typeof actions[action] === "string"
-                ? { type: actions[action] }
+                ? {
+                    type: actions[action],
+                    // If the action is a string and the first argument passed to the action
+                    // is a plain object, we'll spread the content of this object into the action payload.
+                    // E.g.: `{ receivePosts: "RECEIVE_POSTS" }` dispatched as `receivePosts({ posts: [], comments: [] })`
+                    // would be converted to `{ type: "RECEIVE_POSTS", posts: [], comments: [] }`
+                    ...(isPlainObject(args[0]) ? args[0] : {})
+                  }
                 : actions[action](...args)
             )
         }),
