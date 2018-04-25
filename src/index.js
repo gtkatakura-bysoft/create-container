@@ -100,9 +100,9 @@ const createContainer = ({
       new Promise(resolve =>
         this.setState(
           state =>
-            typeof reducer === "object"
-              ? (reducer[action.type] || identity)(state, action)
-              : reducer(state, action),
+            (typeof reducer === "object"
+              ? reducer[action.type] || identity
+              : reducer)(state, action),
           resolve
         )
       )
